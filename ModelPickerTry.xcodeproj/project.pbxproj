@@ -9,18 +9,29 @@
 /* Begin PBXBuildFile section */
 		B9083E5828ACDD04007FFDDD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9083E5728ACDD04007FFDDD /* AppDelegate.swift */; };
 		B9083E5A28ACDD04007FFDDD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9083E5928ACDD04007FFDDD /* ContentView.swift */; };
-		B9083E5C28ACDD04007FFDDD /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = B9083E5B28ACDD04007FFDDD /* Experience.rcproject */; };
 		B9083E5E28ACDD05007FFDDD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9083E5D28ACDD05007FFDDD /* Assets.xcassets */; };
 		B9083E6128ACDD05007FFDDD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9083E6028ACDD05007FFDDD /* Preview Assets.xcassets */; };
+		B9083E6C28ACDEEB007FFDDD /* teapot.usdz in Resources */ = {isa = PBXBuildFile; fileRef = B9083E6828ACDEEB007FFDDD /* teapot.usdz */; };
+		B9083E6D28ACDEEB007FFDDD /* toy_biplane.usdz in Resources */ = {isa = PBXBuildFile; fileRef = B9083E6928ACDEEB007FFDDD /* toy_biplane.usdz */; };
+		B9083E6E28ACDEEB007FFDDD /* toy_drummer.usdz in Resources */ = {isa = PBXBuildFile; fileRef = B9083E6A28ACDEEB007FFDDD /* toy_drummer.usdz */; };
+		B9083E6F28ACDEEB007FFDDD /* toy_robot_vintage.usdz in Resources */ = {isa = PBXBuildFile; fileRef = B9083E6B28ACDEEB007FFDDD /* toy_robot_vintage.usdz */; };
+		B9083E7128ACDF3E007FFDDD /* fender_stratocaster.usdz in Resources */ = {isa = PBXBuildFile; fileRef = B9083E7028ACDF3E007FFDDD /* fender_stratocaster.usdz */; };
+		B9083E7328AD1883007FFDDD /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9083E7228AD1883007FFDDD /* Model.swift */; };
+		B9083E7628AD1DD8007FFDDD /* FocusEntity in Frameworks */ = {isa = PBXBuildFile; productRef = B9083E7528AD1DD8007FFDDD /* FocusEntity */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B9083E5428ACDD04007FFDDD /* ModelPickerTry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ModelPickerTry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9083E5728ACDD04007FFDDD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9083E5928ACDD04007FFDDD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		B9083E5B28ACDD04007FFDDD /* Experience.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = Experience.rcproject; sourceTree = "<group>"; };
 		B9083E5D28ACDD05007FFDDD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B9083E6028ACDD05007FFDDD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B9083E6828ACDEEB007FFDDD /* teapot.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = teapot.usdz; sourceTree = "<group>"; };
+		B9083E6928ACDEEB007FFDDD /* toy_biplane.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = toy_biplane.usdz; sourceTree = "<group>"; };
+		B9083E6A28ACDEEB007FFDDD /* toy_drummer.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = toy_drummer.usdz; sourceTree = "<group>"; };
+		B9083E6B28ACDEEB007FFDDD /* toy_robot_vintage.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = toy_robot_vintage.usdz; sourceTree = "<group>"; };
+		B9083E7028ACDF3E007FFDDD /* fender_stratocaster.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = fender_stratocaster.usdz; sourceTree = "<group>"; };
+		B9083E7228AD1883007FFDDD /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9083E7628AD1DD8007FFDDD /* FocusEntity in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,9 +65,10 @@
 		B9083E5628ACDD04007FFDDD /* ModelPickerTry */ = {
 			isa = PBXGroup;
 			children = (
+				B9083E6728ACDE67007FFDDD /* Models */,
 				B9083E5728ACDD04007FFDDD /* AppDelegate.swift */,
 				B9083E5928ACDD04007FFDDD /* ContentView.swift */,
-				B9083E5B28ACDD04007FFDDD /* Experience.rcproject */,
+				B9083E7228AD1883007FFDDD /* Model.swift */,
 				B9083E5D28ACDD05007FFDDD /* Assets.xcassets */,
 				B9083E5F28ACDD05007FFDDD /* Preview Content */,
 			);
@@ -68,6 +81,18 @@
 				B9083E6028ACDD05007FFDDD /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B9083E6728ACDE67007FFDDD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B9083E7028ACDF3E007FFDDD /* fender_stratocaster.usdz */,
+				B9083E6828ACDEEB007FFDDD /* teapot.usdz */,
+				B9083E6928ACDEEB007FFDDD /* toy_biplane.usdz */,
+				B9083E6A28ACDEEB007FFDDD /* toy_drummer.usdz */,
+				B9083E6B28ACDEEB007FFDDD /* toy_robot_vintage.usdz */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,6 +111,9 @@
 			dependencies = (
 			);
 			name = ModelPickerTry;
+			packageProductDependencies = (
+				B9083E7528AD1DD8007FFDDD /* FocusEntity */,
+			);
 			productName = ModelPickerTry;
 			productReference = B9083E5428ACDD04007FFDDD /* ModelPickerTry.app */;
 			productType = "com.apple.product-type.application";
@@ -114,6 +142,9 @@
 				Base,
 			);
 			mainGroup = B9083E4B28ACDD04007FFDDD;
+			packageReferences = (
+				B9083E7428AD1DD8007FFDDD /* XCRemoteSwiftPackageReference "FocusEntity" */,
+			);
 			productRefGroup = B9083E5528ACDD04007FFDDD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -128,7 +159,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9083E6E28ACDEEB007FFDDD /* toy_drummer.usdz in Resources */,
+				B9083E7128ACDF3E007FFDDD /* fender_stratocaster.usdz in Resources */,
+				B9083E6C28ACDEEB007FFDDD /* teapot.usdz in Resources */,
+				B9083E6F28ACDEEB007FFDDD /* toy_robot_vintage.usdz in Resources */,
 				B9083E6128ACDD05007FFDDD /* Preview Assets.xcassets in Resources */,
+				B9083E6D28ACDEEB007FFDDD /* toy_biplane.usdz in Resources */,
 				B9083E5E28ACDD05007FFDDD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -140,9 +176,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9083E7328AD1883007FFDDD /* Model.swift in Sources */,
 				B9083E5A28ACDD04007FFDDD /* ContentView.swift in Sources */,
 				B9083E5828ACDD04007FFDDD /* AppDelegate.swift in Sources */,
-				B9083E5C28ACDD04007FFDDD /* Experience.rcproject in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +383,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B9083E7428AD1DD8007FFDDD /* XCRemoteSwiftPackageReference "FocusEntity" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/maxxfrazer/FocusEntity";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B9083E7528AD1DD8007FFDDD /* FocusEntity */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9083E7428AD1DD8007FFDDD /* XCRemoteSwiftPackageReference "FocusEntity" */;
+			productName = FocusEntity;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B9083E4C28ACDD04007FFDDD /* Project object */;
 }
