@@ -14,16 +14,17 @@ struct ContentView : View {
     @State private var isPlacementEnabled = false
     @State private var selectedModel: Model?
     @State private var modelConfirmedForPlacement: Model?
+    @State private var isDeleteModel = false
     
     private var models: [Model] = {
         // Dynamically get our model filenames
         let filemanager = FileManager.default
-
+        
         guard let path = Bundle.main.resourcePath, let files = try?
-            filemanager.contentsOfDirectory(atPath: path) else {
+                filemanager.contentsOfDirectory(atPath: path) else {
             return []
         }
-
+        
         var availableModels: [Model] = []
         for filename in files where filename.hasSuffix("usdz") {
             let modelName = filename.replacingOccurrences(of: ".usdz", with: "")
@@ -31,18 +32,18 @@ struct ContentView : View {
             let model = Model(modelName: modelName)
             availableModels.append(model)
         }
-
+        
         return availableModels
     }()
     
-//    var models: [String] = ["fender_stratocaster", "teapot", "toy_biplane", "toy_robot_vintage"]
+    //    var models: [String] = ["fender_stratocaster", "teapot", "toy_biplane", "toy_robot_vintage"]
     
     var body: some View {
         ZStack(alignment: .bottom){
-            ARViewContainer(modelConfirmedForReplacement: self.$modelConfirmedForPlacement)
+            ARViewContainer(modelConfirmedForReplacement: self.$modelConfirmedForPlacement, isDeleteModel: self.$isDeleteModel)
             
             if self.isPlacementEnabled {
-                PlacementButtonView(isPlacementEnabled: self.$isPlacementEnabled, selectedModel: self.$selectedModel, modelConfirmedForPlacement: self.$modelConfirmedForPlacement)
+                PlacementButtonView(isPlacementEnabled: self.$isPlacementEnabled, selectedModel: self.$selectedModel, modelConfirmedForPlacement: self.$modelConfirmedForPlacement, isDeleteModel: self.$isDeleteModel)
             }else{
                 ModelPickerView(isPlacementEnabled: self.$isPlacementEnabled, selectedModel: self.$selectedModel, models: self.models)
             }
@@ -52,98 +53,132 @@ struct ContentView : View {
 
 struct ARViewContainer: UIViewRepresentable {
     @Binding var modelConfirmedForReplacement: Model?
-    
+    @Binding var isDeleteModel: Bool
     func makeUIView(context: Context) -> ARView {
         
         let arView = CustomARView(frame: .zero)
-        
+        arView.enableObjectRemoval()
         return arView
         
     }
     
     func updateUIView(_ uiView: ARView, context: Context) {
         if let model = self.modelConfirmedForReplacement {
-            if let modelEntity = model.modelEntity {
-                print("DEBUG: adding model to scene - \(model.modelName)")
+            if(isDeleteModel == true){
                 
-                let anchorEntity = AnchorEntity(plane: .any)
-                anchorEntity.addChild(modelEntity.clone(recursive: true))
-                
-                uiView.scene.addAnchor(anchorEntity)
-            }else{
-                print("DEBUG: unable to load modelEntity for - \(model.modelName)")
+            }
+            else{
+                if let modelEntity = model.modelEntity {
+                    print("DEBUG: adding model to scene - \(model.modelName)")
+                    modelEntity.generateCollisionShapes(recursive: true)
+                    uiView.installGestures([.translation,.rotation,.scale],for: modelEntity)
+                    //ADDS 3D
+                    
+                    let anchorEntity = AnchorEntity(plane: .any)
+                    anchorEntity.name = "something"
+//                    anchorEntity.addChild(modelEntity.clone(recursive: true))
+                    anchorEntity.addChild(modelEntity)
+                    uiView.scene.addAnchor(anchorEntity)
+                    
+// Try Debugging, cause it wont work if its clone
+//                    uiView.debugOptions.showPhysics
+                    
+                }else{
+                    print("DEBUG: unable to load modelEntity for - \(model.modelName)")
+                }
             }
             
-//            let filename = modelName + ".usdz"
             
-//            let modelEntity = try! ModelEntity.loadModel(named: filename)
-//
-//            let anchorEntity = AnchorEntity(plane: .any)
-//            anchorEntity.addChild(modelEntity)
-//
-//            uiView.scene.addAnchor(anchorEntity)
+            //            let filename = modelName + ".usdz"
+            
+            //            let modelEntity = try! ModelEntity.loadModel(named: filename)
+            //
+            //            let anchorEntity = AnchorEntity(plane: .any)
+            //            anchorEntity.addChild(modelEntity)
+            //
+            //            uiView.scene.addAnchor(anchorEntity)
             
             DispatchQueue.main.async {
                 self.modelConfirmedForReplacement = nil
             }
         }
+        
     }
     
 }
 
 class CustomARView: ARView {
-  enum FocusStyleChoices {
-    case classic
-    case material
-    case color
-  }
-
-  /// Style to be displayed in the example
-  let focusStyle: FocusStyleChoices = .classic
-  var focusEntity: FocusEntity?
-  required init(frame frameRect: CGRect) {
-    super.init(frame: frameRect)
-    self.setupConfig()
-
-    switch self.focusStyle {
-    case .color:
-      self.focusEntity = FocusEntity(on: self, focus: .plane)
-    case .material:
-      do {
-        let onColor: MaterialColorParameter = try .texture(.load(named: "Add"))
-        let offColor: MaterialColorParameter = try .texture(.load(named: "Open"))
-        self.focusEntity = FocusEntity(
-          on: self,
-          style: .colored(
-            onColor: onColor, offColor: offColor,
-            nonTrackingColor: offColor
-          )
-        )
-      } catch {
-        self.focusEntity = FocusEntity(on: self, focus: .classic)
-        print("Unable to load plane textures")
-        print(error.localizedDescription)
-      }
-    default:
-      self.focusEntity = FocusEntity(on: self, focus: .classic)
+//    enum FocusStyleChoices {
+//        case classic
+//        case material
+//        case color
+//    }
+//
+//    /// Style to be displayed in the example
+//    let focusStyle: FocusStyleChoices = .classic
+//    var focusEntity: FocusEntity?
+//    required init(frame frameRect: CGRect) {
+//        super.init(frame: frameRect)
+//        self.setupConfig()
+//
+//        switch self.focusStyle {
+//        case .color:
+//            self.focusEntity = FocusEntity(on: self, focus: .plane)
+//        case .material:
+//            do {
+//                let onColor: MaterialColorParameter = try .texture(.load(named: "Add"))
+//                let offColor: MaterialColorParameter = try .texture(.load(named: "Open"))
+//                self.focusEntity = FocusEntity(
+//                    on: self,
+//                    style: .colored(
+//                        onColor: onColor, offColor: offColor,
+//                        nonTrackingColor: offColor
+//                    )
+//                )
+//            } catch {
+//                self.focusEntity = FocusEntity(on: self, focus: .classic)
+//                print("Unable to load plane textures")
+//                print(error.localizedDescription)
+//            }
+//        default:
+//            self.focusEntity = FocusEntity(on: self, focus: .classic)
+//        }
+//    }
+//
+//    @objc required dynamic init?(coder decoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+    func setupConfig() {
+        let config = ARWorldTrackingConfiguration()
+        config.planeDetection = [.horizontal, .vertical]
+        config.environmentTexturing = .automatic
+        
+        if ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh) {
+            config.sceneReconstruction = .mesh
+        }
+        self.session.run(config)
     }
-  }
-
-  func setupConfig() {
-    let config = ARWorldTrackingConfiguration()
-    config.planeDetection = [.horizontal, .vertical]
-    config.environmentTexturing = .automatic
     
-      if ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh) {
-          config.sceneReconstruction = .mesh
-      }
-      
-      self.session.run(config)
-  }
-
-  @objc required dynamic init?(coder decoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
+    
+    
+    func enableObjectRemoval(){
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(recognizer:)))
+        self.addGestureRecognizer(longPressGestureRecognizer)
+        
+    }
+    @objc func handleLongPress(recognizer : UILongPressGestureRecognizer){
+        let location = recognizer.location(in: self)
+        
+        if let entity = self.entity(at: location) {
+            if let anchorEntity = entity.anchor, anchorEntity.name == "something"{
+                anchorEntity.removeFromParent()
+                print("Removed anchor with name: " + anchorEntity.name)
+            }
+            
+        }
+        
+    }
+    
 }
 
 extension CustomARView:FocusEntityDelegate {
@@ -156,12 +191,14 @@ extension CustomARView:FocusEntityDelegate {
     }
 }
 
+
 struct ModelPickerView: View {
+    //#1
     @Binding var isPlacementEnabled: Bool
     @Binding var selectedModel: Model?
     
     var models: [Model]
-
+    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false){
             HStack(spacing: 30){
@@ -192,7 +229,7 @@ struct PlacementButtonView: View{
     @Binding var isPlacementEnabled: Bool
     @Binding var selectedModel: Model?
     @Binding var modelConfirmedForPlacement: Model?
-    
+    @Binding var isDeleteModel: Bool
     var body: some View{
         HStack{
             //Cancel Button
@@ -218,6 +255,20 @@ struct PlacementButtonView: View{
                 self.resetPlacementParameters()
             }, label: {
                 Image(systemName: "checkmark")
+                    .frame(width: 60, height: 60)
+                    .font(.title)
+                    .background(Color.white.opacity(0.75))
+                    .cornerRadius(30)
+                    .padding(20)
+            })
+            Button(action: {
+                print("DEBUG: model Delete confirmed.")
+                self.isDeleteModel = true
+                self.modelConfirmedForPlacement = self.selectedModel
+                
+                self.resetPlacementParameters()
+            }, label: {
+                Image(systemName: "trash")
                     .frame(width: 60, height: 60)
                     .font(.title)
                     .background(Color.white.opacity(0.75))
